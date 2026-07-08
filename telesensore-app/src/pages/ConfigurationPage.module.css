@@ -1,0 +1,157 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 20px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-purple-soft);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.cardsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lockedTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.dirtyTag {
+  font-size: 11.5px;
+  color: var(--accent-amber);
+  font-weight: 600;
+}
+
+.sectionLabel {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.vizControlsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.togglesRow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.viewButtonsRow {
+  display: flex;
+  gap: 8px;
+}
+
+.noteText {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sessionCard {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: end;
+}
+
+.sessionButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.fileField {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.fileInput {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 14px;
+}
+
+.fileInput:focus {
+  outline: none;
+  border-color: var(--border-active);
+}
+
+.actionBar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 0 4px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border-soft);
+  background: var(--bg-app);
+}

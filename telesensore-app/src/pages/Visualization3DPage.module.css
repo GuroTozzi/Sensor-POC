@@ -1,0 +1,198 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.canvasCard {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvasHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 0;
+}
+
+.shapeSwitch {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+
+.shapeButton {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.shapeButton.active {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-light) 100%);
+  color: #fff;
+}
+
+.canvasBox {
+  position: relative;
+  height: 460px;
+  margin: 16px 20px 20px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+  background: #050b14;
+}
+
+.overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.overlayValue {
+  background: rgba(11, 20, 32, 0.78);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  backdrop-filter: blur(6px);
+}
+
+.overlayValue strong {
+  color: var(--text-primary);
+  margin-left: 6px;
+}
+
+.cameraBadge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(11, 20, 32, 0.78);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.axisGizmo {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(11, 20, 32, 0.78);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  pointer-events: none;
+}
+
+.axisChip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.axisDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.controlLabel {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.select {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.qualityValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.dataStateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dataStateButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dataStateButton.active.valid {
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--accent-green);
+}
+.dataStateButton.active.unreliable {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-amber);
+}
+.dataStateButton.active.missing {
+  border-color: rgba(148, 163, 184, 0.5);
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-secondary);
+}

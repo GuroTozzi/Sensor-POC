@@ -1,0 +1,41 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.card.elevated {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-card);
+}
+
+.card.soft {
+  background: var(--bg-card-soft);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.infoIcon {
+  color: var(--text-muted);
+  display: inline-flex;
+}

@@ -1,0 +1,83 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.inputRow {
+  display: flex;
+  align-items: stretch;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+.inputRow:focus-within {
+  border-color: var(--border-active);
+}
+
+.inputRow.disabled {
+  opacity: 0.5;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 14px;
+}
+
+.unit {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: var(--text-muted);
+  font-size: 13px;
+  border-left: 1px solid var(--border-soft);
+}
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-soft);
+}
+
+.stepButton {
+  flex: 1;
+  width: 28px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepButton:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stepButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

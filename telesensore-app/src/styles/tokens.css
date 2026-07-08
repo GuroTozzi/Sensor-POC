@@ -1,0 +1,45 @@
+:root {
+  /* Background */
+  --bg-app: #050b14;
+  --bg-sidebar: #06101d;
+  --bg-panel: #0b1420;
+  --bg-card: #101a28;
+  --bg-card-soft: #121e2e;
+  --bg-elevated: #172337;
+
+  /* Border */
+  --border-soft: rgba(148, 163, 184, 0.16);
+  --border-medium: rgba(148, 163, 184, 0.28);
+  --border-active: rgba(139, 92, 246, 0.7);
+
+  /* Text */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-disabled: #64748b;
+
+  /* Accents */
+  --accent-purple: #7c3aed;
+  --accent-purple-light: #8b5cf6;
+  --accent-purple-soft: rgba(124, 58, 237, 0.18);
+
+  --accent-blue: #2563eb;
+  --accent-cyan: #06b6d4;
+  --accent-green: #22c55e;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+
+  /* Effects */
+  --shadow-card: 0 24px 80px rgba(0, 0, 0, 0.35);
+  --glow-purple: 0 0 32px rgba(124, 58, 237, 0.45);
+  --glow-green: 0 0 28px rgba(34, 197, 94, 0.35);
+
+  /* Layout */
+  --sidebar-width: 240px;
+  --content-padding: 32px;
+  --radius-lg: 20px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}

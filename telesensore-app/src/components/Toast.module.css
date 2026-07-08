@@ -1,0 +1,41 @@
+.stack {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+  max-width: 360px;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-card);
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.info .icon {
+  color: var(--accent-cyan);
+}
+.success .icon {
+  color: var(--accent-green);
+}
+.warning .icon {
+  color: var(--accent-amber);
+}
+.error .icon {
+  color: var(--accent-red);
+}

@@ -1,0 +1,43 @@
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.segmented {
+  display: flex;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmentButton {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.segmentButton.active {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-light) 100%);
+  color: #fff;
+}
+
+.chartBox {
+  width: 100%;
+  height: 220px;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}

@@ -1,0 +1,57 @@
+.toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.viewSwitch {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.switchButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switchButton.active {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-light) 100%);
+  border-color: var(--accent-purple-light);
+  color: #fff;
+  box-shadow: var(--glow-purple);
+}
+
+.chartsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
