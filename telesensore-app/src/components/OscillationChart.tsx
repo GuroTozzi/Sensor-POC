@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -13,8 +12,7 @@ import {
 import { Card } from "./Card";
 import { Toggle } from "./Toggle";
 import { FFTChart } from "./FFTChart";
-import { DotLegend } from "./ChartLegend";
-import { findGapBoundaries, formatRelativeSeconds } from "../hooks/useWindowedSeries";
+import { findGapBoundaries } from "../hooks/useWindowedSeries";
 import type { SeriesPoint } from "../data/types";
 import styles from "./OscillationChart.module.css";
 
@@ -35,21 +33,15 @@ export function OscillationChart({ data, now, windowSeconds, showFFT, onToggleFF
       tooltip="Mostra lo spostamento orizzontale e verticale nel tempo."
       headerExtra={
         <div className={styles.headerControls}>
-          <div className={styles.segmented}>
-            <button
-              type="button"
-              className={[styles.segmentButton, !showFFT ? styles.active : ""].filter(Boolean).join(" ")}
-              onClick={() => onToggleFFT(false)}
-            >
-              Tempo
-            </button>
-            <button
-              type="button"
-              className={[styles.segmentButton, showFFT ? styles.active : ""].filter(Boolean).join(" ")}
-              onClick={() => onToggleFFT(true)}
-            >
-              FFT
-            </button>
+          <div className={styles.channelLegend}>
+            <span className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: "var(--accent-purple-light)" }} />
+              Canale 1
+            </span>
+            <span className={styles.legendItem}>
+              <span className={styles.legendDot} style={{ background: "var(--accent-cyan)" }} />
+              Canale 2
+            </span>
           </div>
           <Toggle checked={showFFT} onChange={onToggleFFT} label="Mostra FFT" />
         </div>
@@ -65,22 +57,23 @@ export function OscillationChart({ data, now, windowSeconds, showFFT, onToggleFF
               <XAxis
                 dataKey="t"
                 type="number"
-                domain={[now - windowSeconds, now]}
-                tickFormatter={(t) => formatRelativeSeconds(now, t)}
+                domain={[0, 120]}
+                ticks={[0, 20, 40, 60, 80, 100, 120]}
+                tickFormatter={(v: number) => String(v)}
                 stroke="var(--text-muted)"
                 tick={{ fontSize: 11 }}
                 tickLine={false}
                 axisLine={{ stroke: "var(--border-soft)" }}
               />
               <YAxis
-                domain={[-2, 2]}
+                domain={[-0.4, 0.4]}
+                ticks={[-0.4, -0.2, 0, 0.2, 0.4]}
                 tickFormatter={(v) => v.toFixed(1)}
                 stroke="var(--text-muted)"
                 tick={{ fontSize: 11 }}
                 tickLine={false}
                 axisLine={false}
                 width={42}
-                unit=" mm"
               />
               <Tooltip
                 contentStyle={{
@@ -89,13 +82,12 @@ export function OscillationChart({ data, now, windowSeconds, showFFT, onToggleFF
                   borderRadius: 10,
                   fontSize: 12,
                 }}
-                labelFormatter={(t) => formatRelativeSeconds(now, Number(t))}
+                labelFormatter={(t) => `${Math.round(Number(t))}s`}
                 formatter={(value, name) => [
                   value === null || value === undefined ? "—" : `${Number(value).toFixed(3)} mm`,
                   String(name),
                 ]}
               />
-              <Legend content={<DotLegend />} />
               {gapBoundaries.map((t) => (
                 <ReferenceLine key={t} x={t} stroke="var(--border-medium)" strokeDasharray="3 4" />
               ))}

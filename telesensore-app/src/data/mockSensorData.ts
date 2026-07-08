@@ -57,18 +57,20 @@ export function sampleAt(t: number): SeriesPoint {
   }
 
   const amplitudeScale = dropping ? 0.35 : 1;
-  const channelX =
-    0.85 * Math.sin(2 * Math.PI * 0.6 * t) * amplitudeScale +
-    0.18 * Math.sin(2 * Math.PI * 2.4 * t) * amplitudeScale +
-    (noise(t * 1.7) - 0.5) * 0.08;
-  const channelY =
-    0.65 * Math.sin(2 * Math.PI * 0.6 * t + 0.9) * amplitudeScale +
-    0.12 * Math.sin(2 * Math.PI * 1.8 * t) * amplitudeScale +
-    (noise(t * 2.3) - 0.5) * 0.07;
+  const channelX = (
+    0.85 * Math.sin(2 * Math.PI * 0.1 * t) * amplitudeScale +
+    0.18 * Math.sin(2 * Math.PI * 0.3 * t) * amplitudeScale +
+    (noise(t * 1.7) - 0.5) * 0.08
+  ) * 0.36;
+  const channelY = (
+    0.65 * Math.sin(2 * Math.PI * 0.1 * t + 0.9) * amplitudeScale +
+    0.12 * Math.sin(2 * Math.PI * 0.25 * t) * amplitudeScale +
+    (noise(t * 2.3) - 0.5) * 0.07
+  ) * 0.36;
 
   return {
     t,
-    correlation: Number(correlation.toFixed(4)),
+    correlation: Number(((correlation - 0.5) * 0.8).toFixed(4)),
     channelX: Number(channelX.toFixed(4)),
     channelY: Number(channelY.toFixed(4)),
   };

@@ -1,18 +1,21 @@
+import type { ReactNode } from "react";
 import { Activity, Box, LayoutGrid } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../state/AppStateContext";
 import styles from "../pages/VisualizationPage.module.css";
 
-export function VisualizationToolbar({ active }: { active: "graphs" | "3d" }) {
+export function VisualizationToolbar({
+  active,
+  rightSlot,
+}: {
+  active: "graphs" | "3d";
+  rightSlot?: ReactNode;
+}) {
   const navigate = useNavigate();
   const { addToast } = useAppState();
 
   return (
     <div className={styles.toolbar}>
-      <div className={styles.titleBlock}>
-        <h1 className={styles.title}>Visualizzazione</h1>
-        <span className={styles.subtitle}>Dati in tempo reale dal telesensore</span>
-      </div>
       <div className={styles.viewSwitch}>
         <button
           type="button"
@@ -36,9 +39,10 @@ export function VisualizationToolbar({ active }: { active: "graphs" | "3d" }) {
           onClick={() => navigate("/visualization/graphs")}
         >
           <Activity size={16} />
-          Vista Grafici
+          Vista 2D
         </button>
       </div>
+      {rightSlot && <div>{rightSlot}</div>}
     </div>
   );
 }

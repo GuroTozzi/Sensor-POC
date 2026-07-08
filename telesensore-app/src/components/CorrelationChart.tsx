@@ -12,11 +12,11 @@ import {
 import { Card } from "./Card";
 import { Toggle } from "./Toggle";
 import { TIME_WINDOW_OPTIONS } from "../data/mockSensorData";
-import { findGapBoundaries, formatRelativeSeconds } from "../hooks/useWindowedSeries";
+import { findGapBoundaries } from "../hooks/useWindowedSeries";
 import type { SeriesPoint } from "../data/types";
 import styles from "./CorrelationChart.module.css";
 
-const PEAK_THRESHOLD = 0.45;
+const PEAK_THRESHOLD = 0;
 
 interface CorrelationChartProps {
   data: SeriesPoint[];
@@ -68,16 +68,18 @@ export function CorrelationChart({
             <XAxis
               dataKey="t"
               type="number"
-              domain={[now - windowSeconds, now]}
-              tickFormatter={(t) => formatRelativeSeconds(now, t)}
+              domain={[0, 120]}
+              ticks={[0, 20, 40, 60, 80, 100, 120]}
+              tickFormatter={(v: number) => String(v)}
               stroke="var(--text-muted)"
               tick={{ fontSize: 11 }}
               tickLine={false}
               axisLine={{ stroke: "var(--border-soft)" }}
             />
             <YAxis
-              domain={[0, 1]}
-              tickFormatter={(v) => v.toFixed(2)}
+              domain={[-0.4, 0.4]}
+              ticks={[-0.4, -0.2, 0, 0.2, 0.4]}
+              tickFormatter={(v) => v.toFixed(1)}
               stroke="var(--text-muted)"
               tick={{ fontSize: 11 }}
               tickLine={false}
@@ -91,7 +93,7 @@ export function CorrelationChart({
                 borderRadius: 10,
                 fontSize: 12,
               }}
-              labelFormatter={(t) => formatRelativeSeconds(now, Number(t))}
+              labelFormatter={(t) => `${Math.round(Number(t))}s`}
               formatter={(value) =>
                 value === null || value === undefined ? ["—", "Correlazione"] : [Number(value).toFixed(3), "Correlazione"]
               }
