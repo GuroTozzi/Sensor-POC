@@ -29,8 +29,6 @@ export function Sidebar() {
     addToast(`${label}: schermata non inclusa in questo prototipo.`, "info");
   };
 
-  const goToLocked = () => addToast("Il sensore non è ancora pronto.", "warning");
-
   const entries: NavEntry[] = [
     {
       label: "Connessione",
@@ -38,20 +36,22 @@ export function Sidebar() {
       match: (p) => p.startsWith("/connection"),
       onClick: () => navigate(connectionRouteForStatus(sensorStatus)),
     },
-    {
-      label: "Visualizzazione",
-      icon: <Activity size={17} />,
-      match: (p) => p.startsWith("/visualization"),
-      onClick: () => (isUnlocked ? navigate("/visualization/graphs") : goToLocked()),
-      disabled: !isUnlocked,
-    },
-    {
-      label: "Configurazione",
-      icon: <Settings size={17} />,
-      match: (p) => p.startsWith("/configuration"),
-      onClick: () => (isUnlocked ? navigate("/configuration") : goToLocked()),
-      disabled: !isUnlocked,
-    },
+    ...(isUnlocked
+      ? [
+          {
+            label: "Visualizzazione",
+            icon: <Activity size={17} />,
+            match: (p: string) => p.startsWith("/visualization"),
+            onClick: () => navigate("/visualization/graphs"),
+          },
+          {
+            label: "Configurazione",
+            icon: <Settings size={17} />,
+            match: (p: string) => p.startsWith("/configuration"),
+            onClick: () => navigate("/configuration"),
+          },
+        ]
+      : []),
   ];
 
   const statusMeta: Record<SensorStatus, { tone: string; title: string; subtitle: string }> = {

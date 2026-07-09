@@ -110,6 +110,14 @@
   justify-content: center;
 }
 
+.ctaStackFill {
+  flex: 1;
+}
+
+.ctaStackFill > * {
+  flex: 1;
+}
+
 .banner {
   display: flex;
   align-items: flex-start;

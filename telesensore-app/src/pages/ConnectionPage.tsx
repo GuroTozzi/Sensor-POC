@@ -73,11 +73,19 @@ export function ConnectionPage() {
               >
                 Apri impostazioni Wi-Fi
               </Button>
+              <Button
+                variant="success"
+                size="lg"
+                icon={<Wifi size={16} />}
+                onClick={() => retryConnection()}
+              >
+                Avvia connessione
+              </Button>
             </div>
           )}
 
           {view === "starting" && (
-            <div className={styles.ctaStack}>
+            <div className={`${styles.ctaStack} ${styles.ctaStackFill}`}>
               <Button variant="primary" size="lg" disabled loading>
                 Inizializzazione in corso
               </Button>
@@ -85,7 +93,7 @@ export function ConnectionPage() {
           )}
 
           {view === "ready" && (
-            <div className={styles.ctaStack}>
+            <div className={`${styles.ctaStack} ${styles.ctaStackFill}`}>
               <Button
                 variant="primary"
                 size="lg"

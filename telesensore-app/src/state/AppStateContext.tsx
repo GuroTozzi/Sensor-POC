@@ -261,7 +261,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const timeout = window.setTimeout(() => {
       dispatch({ type: "SENSOR_READY" });
       addToast("Sensore pronto e raggiungibile.", "success");
-    }, 30000);
+    }, 2500);
     return () => window.clearTimeout(timeout);
   }, [state.sensorStatus, addToast]);
 
