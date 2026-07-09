@@ -63,6 +63,14 @@
   flex: 1;
 }
 
+.pageBody {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .chartsColumn {
   flex: 1;
   min-height: 0;

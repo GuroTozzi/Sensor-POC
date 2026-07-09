@@ -111,10 +111,10 @@ function Axes() {
   return (
     <group>
       <Line points={[[0, FLOOR_Y, 0], [AXIS_LENGTH, FLOOR_Y, 0]]} color="#8B5CF6" lineWidth={1.5} />
-      <Line points={[[0, FLOOR_Y, 0], [0, FLOOR_Y + AXIS_LENGTH, 0]]} color="#06B6D4" lineWidth={1.5} />
+      <Line points={[[0, FLOOR_Y, 0], [0, FLOOR_Y + AXIS_LENGTH, 0]]} color="#EF4444" lineWidth={1.5} />
       <Line points={[[0, FLOOR_Y, 0], [0, FLOOR_Y, AXIS_LENGTH]]} color="#22C55E" lineWidth={1.5} />
       <AxisTick position={[AXIS_LENGTH, FLOOR_Y, 0]} color="#8B5CF6" />
-      <AxisTick position={[0, FLOOR_Y + AXIS_LENGTH, 0]} color="#06B6D4" />
+      <AxisTick position={[0, FLOOR_Y + AXIS_LENGTH, 0]} color="#EF4444" />
       <AxisTick position={[0, FLOOR_Y, AXIS_LENGTH]} color="#22C55E" />
     </group>
   );
