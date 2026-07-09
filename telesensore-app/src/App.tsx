@@ -4,6 +4,7 @@ import { ConnectionPage } from "./pages/ConnectionPage";
 import { VisualizationLayout } from "./pages/VisualizationLayout";
 import { VisualizationGraphsPage } from "./pages/VisualizationGraphsPage";
 import { Visualization3DPage } from "./pages/Visualization3DPage";
+import { VisualizationLayoutPage } from "./pages/VisualizationLayoutPage";
 import { ConfigurationPage } from "./pages/ConfigurationPage";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/visualization" element={<VisualizationLayout />}>
           <Route path="graphs" element={<VisualizationGraphsPage />} />
           <Route path="3d" element={<Visualization3DPage />} />
+          <Route path="layout" element={<VisualizationLayoutPage />} />
         </Route>
         <Route path="/configuration" element={<ConfigurationPage />} />
         <Route path="*" element={<Navigate to="/connection/unreachable" replace />} />

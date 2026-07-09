@@ -1,26 +1,24 @@
 import type { ReactNode } from "react";
 import { Activity, Box, LayoutGrid } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAppState } from "../state/AppStateContext";
 import styles from "../pages/VisualizationPage.module.css";
 
 export function VisualizationToolbar({
   active,
   rightSlot,
 }: {
-  active: "graphs" | "3d";
+  active: "graphs" | "3d" | "layout";
   rightSlot?: ReactNode;
 }) {
   const navigate = useNavigate();
-  const { addToast } = useAppState();
 
   return (
     <div className={styles.toolbar}>
       <div className={styles.viewSwitch}>
         <button
           type="button"
-          className={styles.switchButton}
-          onClick={() => addToast("Layout: schermata non inclusa in questo prototipo.", "info")}
+          className={[styles.switchButton, active === "layout" ? styles.active : ""].filter(Boolean).join(" ")}
+          onClick={() => navigate("/visualization/layout")}
         >
           <LayoutGrid size={16} />
           Layout
