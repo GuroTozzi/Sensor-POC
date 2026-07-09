@@ -4,10 +4,8 @@ import {
   ArrowRight,
   CheckCircle2,
   Cpu,
-  Info,
   RefreshCw,
   Settings2,
-  ShieldCheck,
   Wifi,
   WifiOff,
 } from "lucide-react";
@@ -32,7 +30,7 @@ export function ConnectionPage() {
   const params = useParams<{ state: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { sensorStatus, retryConnection, markSensorReady, addToast } = useAppState();
+  const { sensorStatus, retryConnection, addToast } = useAppState();
 
   const view = (params.state as ConnectionRouteState) ?? "unreachable";
 
