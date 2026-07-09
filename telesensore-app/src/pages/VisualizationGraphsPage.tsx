@@ -24,12 +24,13 @@ export function VisualizationGraphsPage() {
   const recordedData = useMemo(() => {
     if (elapsedSeconds <= 0) return [];
     const step = 1 / SAMPLE_RATE_HZ;
+    const wStart = Math.max(0, elapsedSeconds - windowSeconds);
     const points: SeriesPoint[] = [];
-    for (let t = 0; t <= Math.min(elapsedSeconds, 120) + 1e-6; t += step) {
+    for (let t = wStart; t <= elapsedSeconds + 1e-6; t += step) {
       points.push(sampleAt(Number(t.toFixed(3))));
     }
     return points;
-  }, [elapsedSeconds]);
+  }, [elapsedSeconds, windowSeconds]);
 
   const preAcquisition = !isAcquiring && !hasUnsavedData;
   const data = preAcquisition ? FLAT_LINE : recordedData;

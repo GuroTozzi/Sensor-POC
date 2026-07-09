@@ -20,9 +20,9 @@ const FLAT_LINE: SeriesPoint[] = [
 ];
 
 export function VisualizationLayoutPage() {
-  const { simulatedTime, view3D, updateView3D, resetView3D, acquisition } = useAppState();
+  const { simulatedTime, view3D, updateView3D, resetView3D, acquisition, config } = useAppState();
 
-  // ── 3D interaction (shared view3D state, same as Vista 3D) ──
+  // ── 3D interaction (shared view3D state) ─────────────────────
   const canvasBoxRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -70,26 +70,32 @@ export function VisualizationLayoutPage() {
     dragStartPan.current = null;
   }
 
-  // ── 2D chart data ────────────────────────────────────────────
+  // ── 2D chart data (windowed, synced with VisualizationGraphsPage) ──
   const elapsedSeconds = acquisition.elapsedSeconds;
+  const windowSeconds = config.visualization.timeWindow;
 
   const recordedData = useMemo(() => {
     if (elapsedSeconds <= 0) return FLAT_LINE;
     const step = 1 / SAMPLE_RATE_HZ;
+    const wStart = Math.max(0, elapsedSeconds - windowSeconds);
     const points: SeriesPoint[] = [];
-    for (let t = 0; t <= Math.min(elapsedSeconds, 120) + 1e-6; t += step) {
+    for (let t = wStart; t <= elapsedSeconds + 1e-6; t += step) {
       points.push(sampleAt(Number(t.toFixed(3))));
     }
     return points;
-  }, [elapsedSeconds]);
+  }, [elapsedSeconds, windowSeconds]);
 
   const data = elapsedSeconds > 0 ? recordedData : FLAT_LINE;
+
+  const xMin = Math.max(0, elapsedSeconds - windowSeconds);
+  const xMax = Math.max(windowSeconds, elapsedSeconds);
 
   const xAxis = {
     dataKey: "t",
     type: "number" as const,
-    domain: [0, 120] as [number, number],
-    ticks: [0, 60, 120],
+    domain: [xMin, xMax] as [number, number],
+    tickCount: 4,
+    tickFormatter: (v: number) => String(Math.round(v)),
     tick: { fontSize: 10, fill: "var(--text-muted)" },
     tickLine: false,
     axisLine: { stroke: "var(--border-soft)" },
