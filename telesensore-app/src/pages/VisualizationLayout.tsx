@@ -18,7 +18,11 @@ export function VisualizationLayout() {
   const location = useLocation();
 
   const isAcquiring = sensorStatus === "acquiring";
-  const active = location.pathname.endsWith("/3d") ? "3d" : "graphs";
+  const active = location.pathname.endsWith("/3d")
+    ? "3d"
+    : location.pathname.endsWith("/layout")
+    ? "layout"
+    : "graphs";
 
   function handleStartAcquisition() {
     if (hasUnsavedData) {

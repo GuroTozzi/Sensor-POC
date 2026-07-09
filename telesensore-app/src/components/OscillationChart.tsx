@@ -27,6 +27,9 @@ interface OscillationChartProps {
 export function OscillationChart({ data, now, windowSeconds, showFFT, onToggleFFT }: OscillationChartProps) {
   const gapBoundaries = useMemo(() => findGapBoundaries(data, "channelX"), [data]);
 
+  const xMin = Math.max(0, now - windowSeconds);
+  const xMax = Math.max(windowSeconds, now);
+
   return (
     <Card
       title="Oscillazione"
@@ -57,9 +60,9 @@ export function OscillationChart({ data, now, windowSeconds, showFFT, onToggleFF
               <XAxis
                 dataKey="t"
                 type="number"
-                domain={[0, 120]}
-                ticks={[0, 20, 40, 60, 80, 100, 120]}
-                tickFormatter={(v: number) => String(v)}
+                domain={[xMin, xMax]}
+                tickCount={6}
+                tickFormatter={(v: number) => String(Math.round(v))}
                 stroke="var(--text-muted)"
                 tick={{ fontSize: 11 }}
                 tickLine={false}
