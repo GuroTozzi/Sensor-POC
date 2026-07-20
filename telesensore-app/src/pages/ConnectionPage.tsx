@@ -1,14 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   ArrowRight,
   CheckCircle2,
+  ChevronRight,
+  Crosshair,
   Cpu,
   RefreshCw,
   Settings2,
   Wifi,
   WifiOff,
+  X,
 } from "lucide-react";
+import type { CalibrationStored } from "../data/types";
 import { AppLayout } from "../components/AppLayout";
 import { Card } from "../components/Card";
 import { Button } from "../components/Button";
@@ -30,12 +34,10 @@ export function ConnectionPage() {
   const params = useParams<{ state: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { sensorStatus, retryConnection, addToast } = useAppState();
-
+  const { sensorStatus, retryConnection, addToast, calibration } = useAppState();
+  const [calibDetailOpen, setCalibDetailOpen] = useState(false);
   const view = (params.state as ConnectionRouteState) ?? "unreachable";
 
-  // Keep the URL in sync with the global sensor status (handles the
-  // automatic starting -> ready timeout, or a connection drop mid-flow).
   useEffect(() => {
     const target = routeForStatus(sensorStatus);
     if (location.pathname.startsWith("/connection") && location.pathname !== target) {
@@ -91,15 +93,60 @@ export function ConnectionPage() {
           )}
 
           {view === "ready" && (
-            <div className={`${styles.ctaStack} ${styles.ctaStackFill}`}>
-              <Button
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight size={16} />}
-                onClick={() => navigate("/visualization/graphs")}
-              >
-                Visualizza
-              </Button>
+            <div className={styles.ctaStack}>
+              {calibration.hasStored && calibration.stored ? (
+                <>
+                  <button
+                    type="button"
+                    className={styles.calibFoundBanner}
+                    onClick={() => setCalibDetailOpen(true)}
+                  >
+                    <CheckCircle2 size={13} />
+                    <div>
+                      <strong>Calibrazione precedente trovata</strong>
+                      <span>{calibration.stored.distance} m · Tocca per i dettagli</span>
+                    </div>
+                    <ChevronRight size={13} className={styles.calibFoundChevron} />
+                  </button>
+                  {calibDetailOpen && calibration.stored && (
+                    <CalibrationPopover
+                      stored={calibration.stored}
+                      onClose={() => setCalibDetailOpen(false)}
+                    />
+                  )}
+                  <Button
+                    variant="success"
+                    size="lg"
+                    icon={<ArrowRight size={15} />}
+                    onClick={() => navigate("/visualization/graphs")}
+                  >
+                    Usa questa calibrazione
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    icon={<RefreshCw size={15} />}
+                    onClick={() => navigate("/calibration")}
+                  >
+                    Ricalibrare
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div className={styles.calibNeededBanner}>
+                    <Crosshair size={13} />
+                    <span>Nessuna calibrazione trovata. Il dispositivo deve essere calibrato.</span>
+                  </div>
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight size={15} />}
+                    onClick={() => navigate("/calibration")}
+                  >
+                    Avvia calibrazione
+                  </Button>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -216,7 +263,7 @@ function ReadyContent() {
     <>
       <h1 className={styles.title}>Sensore pronto</h1>
       <div className={styles.paragraphs}>
-        <p style={{ whiteSpace: "nowrap" }}>Sensore connesso e pronto. I dati in tempo reale sono disponibili.</p>
+        <p>Connessione stabilita. Calibrare il dispositivo prima di avviare l'acquisizione dati.</p>
       </div>
 
       <div className={styles.diagramArea}>
@@ -233,18 +280,118 @@ function ReadyContent() {
         />
         <StepCard
           number={2}
-          icon={<RefreshCw size={18} color="var(--accent-green)" />}
-          title="Attendi avvio del sensore"
+          icon={<CheckCircle2 size={18} color="var(--accent-green)" />}
+          title="Avvio sensore"
           desc="Il sensore ha completato l'inizializzazione."
           active={false}
         />
         <StepCard
           number={3}
-          icon={<ArrowRight size={18} color="var(--accent-purple-light)" />}
-          title="Accedi alla visualizzazione"
-          desc="Il sensore è pronto, puoi accedere ai dati."
+          icon={<Crosshair size={18} color="var(--accent-purple-light)" />}
+          title="Calibra il dispositivo"
+          desc="Punta il sensore sull'obiettivo e calibra la distanza."
           active
         />
+      </div>
+    </>
+  );
+}
+
+function computeParamsFromDistance(distance: number) {
+  return {
+    acquisitionFrequency: 120,
+    exposure: Math.round((0.3 + distance * 0.6) * 10) / 10,
+    gain: Math.round(distance * 2.8),
+    correlationThreshold: 0.6,
+    corrShortPass: 8,
+    corrHighPass: 35,
+  };
+}
+
+function CalibrationPopover({
+  stored,
+  onClose,
+}: {
+  stored: CalibrationStored;
+  onClose: () => void;
+}) {
+  const date = new Date(stored.timestamp);
+  const formattedDate = date.toLocaleDateString("it-IT", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const formattedTime = date.toLocaleTimeString("it-IT", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const p = computeParamsFromDistance(stored.distance);
+
+  return (
+    <>
+      <div className={styles.popoverBackdrop} onClick={onClose} aria-hidden="true" />
+      <div
+        className={styles.popoverPanel}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Dettagli calibrazione"
+      >
+        <div className={styles.popoverHeader}>
+          <div className={styles.popoverHeaderLeft}>
+            <CheckCircle2 size={14} className={styles.popoverHeaderIcon} />
+            <span>Dettagli calibrazione</span>
+          </div>
+          <button
+            type="button"
+            className={styles.popoverClose}
+            onClick={onClose}
+            aria-label="Chiudi"
+          >
+            <X size={14} />
+          </button>
+        </div>
+
+        <div className={styles.popoverHero}>
+          <div className={styles.popoverDistanceRow}>
+            <span className={styles.popoverDistValue}>{stored.distance}</span>
+            <span className={styles.popoverDistUnit}>m</span>
+          </div>
+          <div className={styles.popoverHeroMeta}>
+            <span className={styles.popoverHeroLabel}>distanza rilevata</span>
+            <span className={styles.popoverMetaDot}>·</span>
+            <span>{formattedDate}, {formattedTime}</span>
+          </div>
+        </div>
+
+        <div className={styles.popoverParamsSection}>
+          <p className={styles.popoverParamsTitle}>Parametri calcolati</p>
+          <div className={styles.popoverParams}>
+            <div className={styles.popoverParam}>
+              <span className={styles.popoverParamLabel}>Frequenza</span>
+              <span className={styles.popoverParamValue}>{p.acquisitionFrequency} fps</span>
+            </div>
+            <div className={styles.popoverParam}>
+              <span className={styles.popoverParamLabel}>Esposizione</span>
+              <span className={styles.popoverParamValue}>{p.exposure} ms</span>
+            </div>
+            <div className={styles.popoverParam}>
+              <span className={styles.popoverParamLabel}>Gain</span>
+              <span className={styles.popoverParamValue}>{p.gain} dB</span>
+            </div>
+            <div className={styles.popoverParam}>
+              <span className={styles.popoverParamLabel}>Soglia corr.</span>
+              <span className={styles.popoverParamValue}>{p.correlationThreshold}</span>
+            </div>
+            <div className={styles.popoverParam}>
+              <span className={styles.popoverParamLabel}>ShortPass</span>
+              <span className={styles.popoverParamValue}>{p.corrShortPass}</span>
+            </div>
+            <div className={styles.popoverParam}>
+              <span className={styles.popoverParamLabel}>HighPass</span>
+              <span className={styles.popoverParamValue}>{p.corrHighPass}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -50,6 +50,7 @@ export function Sidebar() {
       label: "Connessione",
       icon: <Wifi size={17} />,
       path: "/connection",
+      extraPaths: ["/calibration"],
       onClick: () => navigate(connectionRouteForStatus(sensorStatus)),
     },
     ...(isUnlocked
@@ -91,7 +92,10 @@ export function Sidebar() {
             title={collapsed ? entry.label : undefined}
             className={[
               styles.navItem,
-              location.pathname.startsWith(entry.path) ? styles.active : "",
+              (location.pathname.startsWith(entry.path) ||
+                entry.extraPaths?.some((p) => location.pathname.startsWith(p)))
+                ? styles.active
+                : "",
             ]
               .filter(Boolean)
               .join(" ")}

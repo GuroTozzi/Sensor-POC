@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AppStateProvider } from "./state/AppStateContext";
 import { ConnectionPage } from "./pages/ConnectionPage";
+import { CalibrationPage } from "./pages/CalibrationPage";
 import { VisualizationLayout } from "./pages/VisualizationLayout";
 import { VisualizationGraphsPage } from "./pages/VisualizationGraphsPage";
 import { Visualization3DPage } from "./pages/Visualization3DPage";
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/connection/unreachable" replace />} />
         <Route path="/connection/:state" element={<ConnectionPage />} />
+        <Route path="/calibration" element={<CalibrationPage />} />
         <Route path="/visualization" element={<VisualizationLayout />}>
           <Route path="graphs" element={<VisualizationGraphsPage />} />
           <Route path="3d" element={<Visualization3DPage />} />

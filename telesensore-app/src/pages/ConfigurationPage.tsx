@@ -1,5 +1,6 @@
-import { AlertTriangle, ChevronDown, Lock, Moon, RotateCcw, Save, Sun, Wand2 } from "lucide-react";
+import { AlertTriangle, ChevronDown, Crosshair, Lock, Moon, RotateCcw, Save, Sun, Wand2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppLayout } from "../components/AppLayout";
 import { Button } from "../components/Button";
 import { NumericInput } from "../components/NumericInput";
@@ -88,9 +89,10 @@ function LangDropdown({
 /* ── Page ────────────────────────────────────────────────────── */
 
 export function ConfigurationPage() {
-  const { sensorStatus, config, reconfiguring, updateSensorParam, resetConfig, saveConfig, addToast } =
+  const { sensorStatus, config, reconfiguring, calibration, updateSensorParam, resetConfig, saveConfig, addToast } =
     useAppState();
 
+  const navigate = useNavigate();
   const { theme, toggle: toggleTheme } = useTheme();
   const [lang, setLang] = useState<"it" | "en">(() => {
     return (localStorage.getItem("app-lang") as "it" | "en") ?? "it";
@@ -120,6 +122,16 @@ export function ConfigurationPage() {
           <div className={styles.headerActions}>
             {isAcquiring && (
               <StatusPill label="In acquisizione" tone="purple" pulsing />
+            )}
+            {isConnected && (
+              <Button
+                variant="secondary"
+                icon={<Crosshair size={15} />}
+                disabled={isAcquiring}
+                onClick={() => navigate("/calibration")}
+              >
+                {calibration.hasStored ? "Ricalibrare" : "Avvia calibrazione"}
+              </Button>
             )}
             <Button
               variant="secondary"

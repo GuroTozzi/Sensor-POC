@@ -56,11 +56,11 @@
 /* ── Toggle tab: integrated handle on the right border ───────── */
 .toggleBtn {
   position: absolute;
-  right: -28px;
+  right: -24px;
   top: 50%;
   transform: translateY(-50%);
-  width: 28px;
-  height: 64px;
+  width: 23px;
+  height: 50px;
   border-radius: 0 10px 10px 0;
   background: linear-gradient(180deg, var(--accent-purple) 0%, var(--accent-purple-light) 100%);
   border: 1px solid var(--accent-purple);

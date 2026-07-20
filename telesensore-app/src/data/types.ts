@@ -39,6 +39,16 @@ export interface VisualizationParams {
   showCorrelationPeaks: boolean;
 }
 
+export interface CalibrationStored {
+  distance: number;
+  timestamp: string;
+}
+
+export interface CalibrationState {
+  hasStored: boolean;
+  stored: CalibrationStored | null;
+}
+
 export type ToastVariant = "info" | "success" | "warning" | "error";
 
 export interface ToastMessage {

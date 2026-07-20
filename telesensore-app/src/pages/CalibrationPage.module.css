@@ -1,0 +1,453 @@
+/* ── Page layout ──────────────────────────────────────────────── */
+.page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px);
+  gap: 20px;
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.storedNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--accent-purple-light);
+  background: var(--accent-purple-soft);
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  border-radius: 999px;
+  padding: 3px 10px;
+  width: fit-content;
+}
+
+.headerBadge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-card);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ── Camera feeds ─────────────────────────────────────────────── */
+.camerasRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.cameraPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+}
+
+.cameraLabel {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+/* ── IR Camera Feed ───────────────────────────────────────────── */
+.irFeed {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: linear-gradient(160deg, #060d18 0%, #0a1828 100%);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  overflow: hidden;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(80, 120, 200, 0.03) 3px,
+    rgba(80, 120, 200, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Crosshair lines */
+.crosshairH,
+.crosshairV {
+  position: absolute;
+  background: rgba(139, 92, 246, 0.35);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.crosshairH {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-0.5px);
+}
+
+.crosshairV {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+
+/* Reticle rings */
+.reticleRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* IR dot */
+.irDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.7);
+  z-index: 3;
+  animation: irPulse 1.3s ease-in-out infinite;
+}
+
+@keyframes irPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.7); }
+  50% { transform: translate(-50%, -50%) scale(0.7); opacity: 0.7; box-shadow: 0 0 0 7px rgba(239, 68, 68, 0.1), 0 0 10px rgba(239, 68, 68, 0.4); }
+}
+
+/* ── Normal Camera Feed ───────────────────────────────────────── */
+.normalFeed {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border: 1px solid var(--border-soft);
+  overflow: hidden;
+  background: linear-gradient(180deg,
+    #4a5470 0%,
+    #3a4260 30%,
+    #2e3850 65%,
+    #252e40 100%
+  );
+}
+
+/* scene texture — building-like horizontal bands */
+.normalScene {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 28px,
+      rgba(255, 255, 255, 0.015) 28px,
+      rgba(255, 255, 255, 0.015) 29px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 42px,
+      rgba(255, 255, 255, 0.01) 42px,
+      rgba(255, 255, 255, 0.01) 43px
+    );
+  pointer-events: none;
+}
+
+.normalCrosshairH,
+.normalCrosshairV {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.normalCrosshairH {
+  left: 15%;
+  right: 15%;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-0.5px);
+}
+
+.normalCrosshairV {
+  top: 15%;
+  bottom: 15%;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
+}
+
+.normalCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  z-index: 3;
+}
+
+/* ── Corner brackets (shared) ─────────────────────────────────── */
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(139, 92, 246, 0.7);
+  border-style: solid;
+  border-width: 0;
+  z-index: 4;
+}
+
+.cornerLight {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.cornerTL { top: 14px; left: 14px; border-top-width: 2px; border-left-width: 2px; border-top-left-radius: 3px; }
+.cornerTR { top: 14px; right: 14px; border-top-width: 2px; border-right-width: 2px; border-top-right-radius: 3px; }
+.cornerBL { bottom: 14px; left: 14px; border-bottom-width: 2px; border-left-width: 2px; border-bottom-left-radius: 3px; }
+.cornerBR { bottom: 14px; right: 14px; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: 3px; }
+
+/* ── LIVE badge ───────────────────────────────────────────────── */
+.liveBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(6, 10, 20, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
+  z-index: 5;
+  backdrop-filter: blur(4px);
+}
+
+.liveDotRed {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.8);
+  animation: dotBlink 1.2s ease-in-out infinite;
+}
+
+.liveDotGreen {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+  animation: dotBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+:global([data-theme="light"]) .liveBadge {
+  background: rgba(15, 24, 42, 0.65);
+}
+
+/* ── Action bar ───────────────────────────────────────────────── */
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.actionHint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.hintIcon {
+  flex-shrink: 0;
+  color: var(--accent-purple-light);
+  margin-top: 1px;
+}
+
+.measuringState {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+/* ── Measured result ──────────────────────────────────────────── */
+.actionBarMeasured {
+  padding: 20px 24px;
+  gap: 24px;
+}
+
+.resultBlock {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.resultDistance {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 24px;
+  flex-shrink: 0;
+}
+
+.resultCheck {
+  color: var(--accent-green);
+  flex-shrink: 0;
+}
+
+.resultLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.resultValue {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.resultDivider {
+  width: 1px;
+  background: var(--border-soft);
+  flex-shrink: 0;
+  margin: 0 24px 0 0;
+}
+
+.resultParams {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.resultParamsTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+
+.resultParamsGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 3px;
+}
+
+.paramName {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.paramVal {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-purple-light);
+}
+
+.resultActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}

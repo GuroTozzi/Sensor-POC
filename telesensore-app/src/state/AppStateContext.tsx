@@ -5,6 +5,7 @@ import {
   VISUALIZATION_PARAMS_DEFAULTS,
 } from "../data/mockSensorData";
 import type {
+  CalibrationState,
   DataQualityState,
   SensorParams,
   SensorStatus,
@@ -45,6 +46,7 @@ interface AppState {
   acquisition: AcquisitionState;
   config: ConfigState;
   view3D: View3DState;
+  calibration: CalibrationState;
   toasts: ToastMessage[];
   reconfiguring: boolean;
   simulatedTime: number;
@@ -54,6 +56,8 @@ type Action =
   | { type: "SET_STATUS"; status: SensorStatus }
   | { type: "RETRY_CONNECTION" }
   | { type: "SENSOR_READY" }
+  | { type: "ACCEPT_CALIBRATION"; distance: number; params: SensorParams }
+  | { type: "CLEAR_CALIBRATION" }
   | { type: "START_ACQUISITION" }
   | { type: "PAUSE_ACQUISITION" }
   | { type: "RESUME_ACQUISITION" }
@@ -87,8 +91,14 @@ function getInitialStatus(): SensorStatus {
   return "unreachable";
 }
 
+const initialCalibration: CalibrationState = {
+  hasStored: true,
+  stored: { distance: 4.2, timestamp: "2025-06-10T09:15:00.000Z" },
+};
+
 const initialState: AppState = {
   sensorStatus: getInitialStatus(),
+  calibration: initialCalibration,
   acquisition: {
     isAcquiring: false,
     isPaused: false,
@@ -120,6 +130,28 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, sensorStatus: "starting" };
     case "SENSOR_READY":
       return { ...state, sensorStatus: "ready" };
+    case "ACCEPT_CALIBRATION":
+      return {
+        ...state,
+        calibration: {
+          hasStored: true,
+          stored: {
+            distance: action.distance,
+            timestamp: new Date().toISOString(),
+          },
+        },
+        config: {
+          ...state.config,
+          sensor: action.params,
+          savedSensor: action.params,
+          dirty: false,
+        },
+      };
+    case "CLEAR_CALIBRATION":
+      return {
+        ...state,
+        calibration: { hasStored: false, stored: null },
+      };
     case "START_ACQUISITION":
       return {
         ...state,
@@ -237,6 +269,8 @@ interface AppContextValue extends AppState {
   updateView3D: (patch: Partial<View3DState>) => void;
   resetView3D: () => void;
   setSensorStatus: (status: SensorStatus) => void;
+  acceptCalibration: (distance: number, params: SensorParams) => void;
+  clearCalibration: () => void;
   addToast: (message: string, variant?: ToastVariant) => void;
   removeToast: (id: string) => void;
 }
@@ -303,6 +337,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       updateView3D: (patch) => dispatch({ type: "UPDATE_VIEW3D", patch }),
       resetView3D: () => dispatch({ type: "RESET_VIEW3D" }),
       setSensorStatus: (status) => dispatch({ type: "SET_STATUS", status }),
+      acceptCalibration: (distance, params) =>
+        dispatch({ type: "ACCEPT_CALIBRATION", distance, params }),
+      clearCalibration: () => dispatch({ type: "CLEAR_CALIBRATION" }),
       addToast,
       removeToast,
     }),
