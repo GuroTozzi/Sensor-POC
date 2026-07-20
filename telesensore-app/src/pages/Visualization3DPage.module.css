@@ -58,6 +58,10 @@
   background: #050b14;
 }
 
+:global([data-theme="light"]) .canvasBox {
+  background: #d8deec;
+}
+
 .overlay {
   position: absolute;
   top: 16px;
@@ -83,6 +87,11 @@
   margin-left: 6px;
 }
 
+:global([data-theme="light"]) .overlayValue {
+  background: rgba(248, 250, 252, 0.90);
+  border-color: var(--border-medium);
+}
+
 .cameraBadge {
   position: absolute;
   top: 16px;
@@ -98,6 +107,11 @@
   color: var(--text-muted);
 }
 
+:global([data-theme="light"]) .cameraBadge {
+  background: rgba(248, 250, 252, 0.90);
+  border-color: var(--border-medium);
+}
+
 .axisGizmo {
   position: absolute;
   bottom: 16px;
@@ -110,6 +124,11 @@
   border-radius: var(--radius-sm);
   padding: 8px 10px;
   pointer-events: none;
+}
+
+:global([data-theme="light"]) .axisGizmo {
+  background: rgba(248, 250, 252, 0.90);
+  border-color: var(--border-medium);
 }
 
 .axisChip {
@@ -137,4 +156,9 @@
   border-radius: var(--radius-md);
   padding: 12px;
   backdrop-filter: blur(8px);
+}
+
+:global([data-theme="light"]) .viewportControlsOverlay {
+  background: rgba(248, 250, 252, 0.92);
+  border-color: var(--border-medium);
 }

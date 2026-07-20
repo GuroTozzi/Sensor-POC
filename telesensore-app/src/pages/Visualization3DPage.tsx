@@ -123,8 +123,8 @@ export function Visualization3DPage() {
             <span className={styles.axisChip} style={{ color: "var(--accent-green)" }}>
               <span className={styles.axisDot} style={{ background: "var(--accent-green)" }} />Z
             </span>
-            <span className={styles.axisChip} style={{ color: "#EF4444" }}>
-              <span className={styles.axisDot} style={{ background: "#EF4444" }} />Y
+            <span className={styles.axisChip} style={{ color: "var(--accent-red)" }}>
+              <span className={styles.axisDot} style={{ background: "var(--accent-red)" }} />Y
             </span>
             <span className={styles.axisChip} style={{ color: "var(--accent-purple-light)" }}>
               <span className={styles.axisDot} style={{ background: "var(--accent-purple-light)" }} />X

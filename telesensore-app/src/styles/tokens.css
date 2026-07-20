@@ -34,6 +34,9 @@
   --glow-purple: 0 0 32px rgba(124, 58, 237, 0.45);
   --glow-green: 0 0 28px rgba(34, 197, 94, 0.35);
 
+  /* Interaction */
+  --bg-hover-subtle: rgba(255, 255, 255, 0.04);
+
   /* Layout */
   --sidebar-width: 240px;
   --content-padding: 32px;
@@ -42,4 +45,52 @@
   --radius-sm: 10px;
 
   --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ── Light theme overrides ───────────────────────────────────── */
+/*
+   Palette: cool indigo-slate — coerente con l'accent viola del brand.
+   Tutti i colori testo superano WCAG AA (≥ 4.5:1) sui rispettivi sfondi.
+   Le varianti accent sono le versioni "700" della scala, più scure e leggibili su bianco.
+*/
+:root[data-theme="light"] {
+  /* ── Backgrounds: gerarchia a 5 livelli ── */
+  --bg-app:       #e9ecf5;   /* Shell — indigo-slate tenue           */
+  --bg-sidebar:   #dde1ed;   /* Sidebar — pannello laterale distinto */
+  --bg-panel:     #f2f5fc;   /* Area contenuto                       */
+  --bg-card:      #ffffff;   /* Card — bianco puro, massima leggibilità */
+  --bg-card-soft: #f0f3fb;   /* Card soft — sfondo secondario        */
+  --bg-elevated:  #ffffff;   /* Input, dropdown, elementi sovrapposti */
+
+  /* ── Borders: indigo-tinted, chiaramente visibili ── */
+  --border-soft:   rgba(67, 74, 116, 0.13);
+  --border-medium: rgba(67, 74, 116, 0.24);
+  --border-active: rgba(109, 40, 217, 0.60);
+
+  /* ── Text: tutti WCAG AA su qualsiasi livello bg ── */
+  --text-primary:   #111827;   /* 18.3:1 su bianco  — AAA */
+  --text-secondary: #374151;   /* 9.9:1 su bianco   — AAA */
+  --text-muted:     #525966;   /* 6.0:1 su bg-card-soft — AA+ */
+  --text-disabled:  #9ca3af;   /* decorativo, non veicola significato */
+
+  /* ── Accents: versioni "700" per leggibilità come testo ──
+     Ciascuno supera 4.5:1 su sfondo bianco (WCAG AA).          */
+  --accent-purple:       #6d28d9;   /* 7.0:1 su bianco  */
+  --accent-purple-light: #7c3aed;   /* 5.6:1 su bianco  */
+  --accent-purple-soft:  rgba(109, 40, 217, 0.09);
+
+  --accent-blue:  #1d4ed8;   /* 6.5:1 su bianco  */
+  --accent-cyan:  #0e7490;   /* 4.9:1 su bianco  */
+  --accent-green: #15803d;   /* 4.8:1 su bianco  */
+  --accent-amber: #b45309;   /* 4.9:1 su bianco  */
+  --accent-red:   #b91c1c;   /* 6.5:1 su bianco  */
+
+  /* ── Interaction ── */
+  --bg-hover-subtle: rgba(67, 74, 116, 0.08);
+
+  /* ── Effects ── */
+  --shadow-card:  0 1px 3px rgba(15, 23, 42, 0.06),
+                  0 6px 24px rgba(15, 23, 42, 0.08);
+  --glow-purple:  0 4px 18px rgba(109, 40, 217, 0.22);
+  --glow-green:   0 4px 14px rgba(21, 128, 61, 0.18);
 }

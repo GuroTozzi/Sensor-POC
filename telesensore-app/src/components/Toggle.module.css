@@ -27,6 +27,11 @@
   flex-shrink: 0;
 }
 
+:global([data-theme="light"]) .track {
+  background: #c2c8d8;
+  border-color: rgba(67, 74, 116, 0.32);
+}
+
 .track.on {
   background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-purple-light) 100%);
   border-color: var(--accent-purple-light);
